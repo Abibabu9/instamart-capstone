@@ -1,0 +1,100 @@
+{
+  "run_id": "6b590796-ffb2-4a50-b6b4-38df814db8e4",
+  "scenario_id": "S3",
+  "messages": [
+    {
+      "role": "system",
+      "content": "AGENT. You are an Instamart refund support agent. Use tools to verify orders and follow refund policy."
+    },
+    {
+      "role": "user",
+      "content": "Order ORD-100145 arrived far too late, please refund me."
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_1",
+          "name": "get_order",
+          "arguments": {
+            "order_id": "ORD-100145"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_1",
+      "name": "get_order",
+      "content": "{\"order_id\": \"ORD-100145\", \"customer_id\": \"C0016\", \"status\": \"completed\", \"order_amount\": 1999.0, \"delivery_minutes\": 54.0}"
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_2",
+          "name": "search_policy",
+          "arguments": {
+            "query": "refund policy late delivery"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_2",
+      "name": "search_policy",
+      "content": "{\"query\": \"refund policy late delivery\", \"policy_found\": true, \"policy_documents\": [\"delivery_policy.txt\", \"escalation_policy.txt\", \"payment_policy.txt\", \"privacy_policy.txt\", \"refund_policy.txt\"]}"
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_3",
+          "name": "calculate_refund",
+          "arguments": {
+            "order_amount": 1999.0,
+            "delivery_minutes": 54.0
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_3",
+      "name": "calculate_refund",
+      "content": "{\"refund_inr\": 1999.0}"
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_4",
+          "name": "escalate_to_human",
+          "arguments": {
+            "order_id": "ORD-100145",
+            "refund_inr": 1999.0
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_4",
+      "name": "escalate_to_human",
+      "content": "{\"status\": \"escalated\", \"order_id\": \"ORD-100145\", \"refund_inr\": 1999.0}"
+    }
+  ],
+  "tokens_used": 467,
+  "step": 4,
+  "tools_executed": [
+    "get_order",
+    "search_policy",
+    "calculate_refund",
+    "escalate_to_human"
+  ]
+}
