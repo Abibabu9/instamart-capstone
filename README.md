@@ -99,6 +99,14 @@ The scripts use the supplied data and mock LLM implementation. Generated results
 - Applied GridSearchCV and training-data oversampling.
 - Saved the retention list and trained model in `outputs/`.
 
+- Baseline accuracy: 61.6%; baseline lapsed F1-score: 0.000.
+- Logistic Regression: precision 0.644, recall 0.652, F1-score 0.648.
+- Random Forest: precision 0.644, recall 0.652, F1-score 0.648.
+- Oversampled Random Forest: precision 0.556, recall 0.831, F1-score 0.667.
+- The oversampled model improved recall while reducing precision.
+- Model reload check confirmed identical predictions.
+- Top Random Forest feature: frequency (importance 0.400).
+
 ## Part C - LLM Ticket Triage
 
 - Implemented zero-shot and few-shot ticket classification.
