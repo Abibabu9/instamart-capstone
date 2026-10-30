@@ -7,6 +7,7 @@ This project builds a customer intelligence and support co-pilot for a simulated
 ## Reproduce
 
 ### Requirements
+
 - Python 3.11
 - pandas
 - numpy
@@ -18,18 +19,19 @@ This project builds a customer intelligence and support co-pilot for a simulated
 ```bash
 git clone https://github.com/Abibabu9/instamart-capstone.git
 cd instamart-capstone
-
 python -m venv .venv
 ```
 
-Activate the virtual environment:
+Activate the virtual environment.
 
 Windows PowerShell:
+
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
 Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -58,29 +60,44 @@ The scripts use the supplied data and mock LLM implementation. Generated results
 - Prepared 12,309 unique orders.
 - Final order status counts: 11,110 completed and 1,199 cancelled.
 - Completed order revenue: INR 2,998,668.80.
-- Performed seven SQL analyses, including customer spending, city/category revenue, ranking, and daily running revenue.
-- Created a SQLite database and validated the tables, IDs, order amounts, and order statuses.
-- All nine validation checkpoints passed.
-- EDA showed a right-skewed completed order amount distribution, with skewness of 4.61.
+- Performed 7 SQL analyses, including customer spending, city/category revenue, ranking, and daily running revenue.
+- Created a SQLite database and validated tables, IDs, order amounts, and order statuses.
+- All 9 validation checkpoints passed.
+- EDA dataset shapes: customers (1,200 rows, 5 columns), products (40 rows, 4 columns), and orders (12,309 rows, 10 columns).
+- Completed order amount: mean INR 269.91, median INR 135, minimum INR 12, maximum INR 3,998.
+- The completed order amount distribution was right-skewed, with skewness of 4.61.
+- The IQR outlier analysis identified 897 outlier values.
+- Correlation between order amount and discount percentage was -0.0951.
 
 ## Part B - Customer Intelligence
 
 ### RFM Analysis
+
 - Calculated Recency, Frequency, and Monetary values for customers with completed orders.
+- Used 1 October 2025 as the analysis snapshot date.
+- Reference cohort: 1,175 customers.
+- Recency: median 19 days, minimum 0 days, maximum 180 days.
+- Frequency: average 9.46 completed orders.
+- Monetary value: average INR 2,552.06.
 - Saved the results in `outputs/rfm_analysis.csv`.
 
 ### Customer Segmentation
+
 - Applied StandardScaler and K-Means clustering.
 - Compared K values from 2 to 8.
 - Selected K = 4, which produced the highest silhouette score of 0.526.
+- Segment sizes: 436, 138, 419, and 182 customers.
 - PCA explained 85.2% of the variance using the first two components.
 - Saved customer segments in `outputs/customer_segments.csv`.
 
 ### Lapse Prediction
+
 - Built Logistic Regression and Random Forest models.
-- Used a time-based lapse definition and a stratified train/test split.
+- Used a time-based lapse definition with a cutoff date of 1 September 2025.
+- Reference cohort: 1,156 customers; 443 were labelled as lapsed (38.32%).
+- Used a stratified train/test split: 924 training records and 232 test records.
 - Applied GridSearchCV and training-data oversampling.
-- Saved the retention list and model output in the `outputs/` directory.
+- Saved the retention list and trained model in `outputs/`.
 
 ## Part C - LLM Ticket Triage
 
@@ -97,18 +114,22 @@ The scripts use the supplied data and mock LLM implementation. Generated results
 ## Part D - Policy RAG and ReAct Agent
 
 ### Policy RAG
+
 - Loaded policy documents and created 15 text chunks.
 - Used TF-IDF and cosine similarity for policy retrieval.
 - Evaluated retrieval against 14 questions.
 - The expected document was retrieved in the top results for 12 of 14 questions (85.7%).
 - Saved policy chunks and evaluation results in `outputs/`.
+- Some retrieved answers were incomplete or irrelevant, so answer quality requires further evaluation.
 
 ### ReAct Support Agent
+
 - Implemented order lookup, policy search, refund calculation, refund processing, and human escalation tools.
-- Tested seven customer scenarios.
+- Tested 7 customer scenarios.
 - Tested token-limit and timeout handling.
 - Tested simulated crash and checkpoint resume.
 - Added refund-ledger checking to prevent repeated refund issuance.
+- The agent was tested using simulated orders and policy documents.
 
 ## Project Structure
 
