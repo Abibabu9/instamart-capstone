@@ -1,0 +1,100 @@
+{
+  "run_id": "2375233f-73f2-42f4-a403-b229354c7787",
+  "scenario_id": "S2",
+  "messages": [
+    {
+      "role": "system",
+      "content": "AGENT. You are an Instamart refund support agent. Use tools to verify orders and follow refund policy."
+    },
+    {
+      "role": "user",
+      "content": "My order ORD-100067 reached me very late. I would like a refund."
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_1",
+          "name": "get_order",
+          "arguments": {
+            "order_id": "ORD-100067"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_1",
+      "name": "get_order",
+      "content": "{\"order_id\": \"ORD-100067\", \"customer_id\": \"C0008\", \"status\": \"completed\", \"order_amount\": 135.0, \"delivery_minutes\": 59.0}"
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_2",
+          "name": "search_policy",
+          "arguments": {
+            "query": "refund policy late delivery"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_2",
+      "name": "search_policy",
+      "content": "{\"query\": \"refund policy late delivery\", \"policy_found\": true, \"policy_documents\": [\"delivery_policy.txt\", \"escalation_policy.txt\", \"payment_policy.txt\", \"privacy_policy.txt\", \"refund_policy.txt\"]}"
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_3",
+          "name": "calculate_refund",
+          "arguments": {
+            "order_amount": 135.0,
+            "delivery_minutes": 59.0
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_3",
+      "name": "calculate_refund",
+      "content": "{\"refund_inr\": 135.0}"
+    },
+    {
+      "role": "assistant",
+      "content": null,
+      "tool_calls": [
+        {
+          "id": "call_4",
+          "name": "issue_refund",
+          "arguments": {
+            "order_id": "ORD-100067",
+            "refund_inr": 135.0
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_4",
+      "name": "issue_refund",
+      "content": "{\"status\": \"already_issued\", \"order_id\": \"ORD-100067\", \"refund_inr\": 135.0}"
+    }
+  ],
+  "tokens_used": 480,
+  "step": 4,
+  "tools_executed": [
+    "get_order",
+    "search_policy",
+    "calculate_refund",
+    "issue_refund"
+  ]
+}

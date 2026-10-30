@@ -1,0 +1,12 @@
+INSTAMART EDA SUMMARY
+=====================
+Customers: 1200
+Products: 40
+Orders: 12309
+Completed orders: 11110
+Cancelled orders: 1199
+Mean order amount: 269.91
+Median order amount: 135.00
+Outlier count: 897
+Skewness: 4.61
+Order amount vs discount correlation: -0.095
